@@ -1394,53 +1394,6 @@
                         }
                         return !1;
                     }),
-                    (window.WAPI.sendButtons = async function (e, t, n, i) {
-                        if ("string" != typeof t || 0 === t.length) return WAPI.scope(e, !0, 404, "It is necessary to write a title!");
-                        if ("string" != typeof n || 0 === n.length) return WAPI.scope(e, !0, 404, "It is necessary to write a subtitle!");
-                        if (Array.isArray(i) && i.length > 0)
-                            for (let t in i)
-                                if ("function" != typeof i[t]) {
-                                    if (!i[t].buttonText) {
-                                        return WAPI.scope(e, !0, 404, "passed object buttonText");
-                                    }
-                                    if ("object" != typeof i[t].buttonText) {
-                                        console.log(i[t], 1212122132)
-                                        return WAPI.scope(e, !0, 404, "passed object value in buttonText");
-                                    }
-                                    if (!i[t].buttonText.displayText) return WAPI.scope(e, !0, 404, "passed object displayText");
-                                    if ("string" != typeof i[t].buttonText.displayText) return WAPI.scope(e, !0, 404, "passed string value in displayText");
-                                    i[t].buttonId || (i[t].buttonId = `id${t}`), i[t].type || (i[t].type = 1);
-                                }
-                        const a = await WAPI.sendExist(e);
-                        if (a && 404 != a.status && a.id) {
-                            const e = await window.WAPI.getNewMessageId(a.id._serialized),
-                                s = {
-                                    id: e,
-                                    ack: 0,
-                                    from: await Store.MaybeMeUser.getMaybeMeUser(),
-                                    to: a.id,
-                                    local: !0,
-                                    self: "out",
-                                    t: parseInt(new Date().getTime() / 1e3),
-                                    isNewMsg: !0,
-                                    type: "chat",
-                                    body: t,
-                                    caption: t,
-                                    content: t,
-                                    footer: n,
-                                    isDynamicReplyButtonsMsg: !0,
-                                    isForwarded: !1,
-                                    isFromTemplate: !0,
-                                    invis: !0,
-                                    fromMe: !1,
-                                };
-                            var o = { dynamicReplyButtons: i };
-                            Object.assign(s, o);
-                            var r = (await Promise.all(window.Store.addAndSendMsgToChat(a, s)))[1];
-                            return "success" === r || "OK" === r || "OK" === r.messageSendResult ? WAPI.scope(e, !1, r, null) : WAPI.scope(e, !0, r, null);
-                        }
-                        return a;
-                    }),
                     (window.WAPI.checkNumberStatus = async function (e, t = !1) {
                         try {
                             const n = { error: 404 },
@@ -1480,53 +1433,6 @@
                             if (i === e.substr(-i.length, i.length) && ((e.match(/(@g.us)/g) && e.match(/(@g.us)/g).length > 1) || !e.match(/^(\d+(-)+(\d)|\d+(\d))*@g.us$/g)))
                                 return WAPI.scope(e, !0, 404, "incorrect parameters! Use as an example: 00000000-000000@g.us or 00000000000000@g.us");
                         }
-                    }),
-                    (window.WAPI.sendListMenu = async function (e, t, n, i, a, o) {
-                        if (!t && "string" != typeof t) return WAPI.scope(null, !0, 404, "Enter the title variable as an string");
-                        if (!n && "string" != typeof n) return WAPI.scope(null, !0, 404, "Enter the SubTitle variable as an string");
-                        if (!i && "string" != typeof i) return WAPI.scope(null, !0, 404, "Enter the description variable as an string");
-                        if (!a && "string" != typeof a) return WAPI.scope(null, !0, 404, "Enter the buttonText variable as an string");
-                        if (!o && !1 === Array.isArray(o)) return WAPI.scope(null, !0, 404, "Enter the menu variable as an array");
-                        for (let e in o)
-                            if ("remove" !== e) {
-                                if (!o[e].title || "string" != typeof o[e].title || !o[e].title.length) return WAPI.scope(null, !0, 404, "Incorrect Title passed in menu");
-                                if (!(o[e].rows && Array.isArray(o[e].rows) && o[e].rows.length)) return WAPI.scope(null, !0, 404, "Rows must be an object array");
-                                for (let t in o[e].rows)
-                                    if ("remove" !== t) {
-                                        if (!o[e].rows[t].title || !o[e].rows[t].title.length) return WAPI.scope(null, !0, 404, "Enter the Title variable as an string");
-                                        o[e].rows[t].description && o[e].rows[t].description.length && (o[e].rows[t].rowId || (o[e].rows[t].rowId = `dessert_${t}`));
-                                    }
-                            }
-                        const r = await WAPI.sendExist(e);
-                        if (r && 404 != r.status && r.id) {
-                            const e = await window.WAPI.getNewMessageId(r.id._serialized),
-                                d = await Store.MaybeMeUser.getMaybeMeUser(),
-                                c = await WAPI.getchatId(r.id).catch(() => { });
-                            c && ((r.lastReceivedKey._serialized = c._serialized), (r.lastReceivedKey.id = c.id));
-                            const l = {
-                                id: e,
-                                ack: 0,
-                                from: d,
-                                to: r.id,
-                                local: !0,
-                                self: "out",
-                                t: parseInt(new Date().getTime() / 1e3),
-                                isNewMsg: !0,
-                                invis: !0,
-                                footer: n,
-                                notifyName: "",
-                                type: "list",
-                                interactiveAnnotations: !0,
-                                interactiveMessage: !0,
-                                star: !1,
-                                broadcast: !1,
-                                fromMe: !1,
-                                list: { title: t, description: i, buttonText: a, listType: 1, sections: o },
-                            };
-                            var s = (await Promise.all(window.Store.addAndSendMsgToChat(r, l)))[1];
-                            return "success" === s || "OK" === s || "OK" === s.messageSendResult ? WAPI.scope(e, !1, s, null) : WAPI.scope(e, !0, s, null);
-                        }
-                        return r;
                     }),
                     (window.WAPI.getStateConnection = function () {
                         return window.Store.State.Socket.state;
@@ -2655,78 +2561,6 @@
                                         Store && Store.BusinessProfile && ((Store.Chat._findAndParse = Store.BusinessProfile._findAndParse), (Store.Chat._find = Store.BusinessProfile._find));
                                 },
                             ]);
-                    }),
-                    (window.WAPI.sendTypeButtons = async function (e, t, n, i, a) {
-                        const o = await WAPI.sendExist(e);
-                        if ("string" != typeof t || 0 === t.length) return WAPI.scope(e, !0, 404, "It is necessary to write a text!");
-                        let r = 0;
-                        if (Array.isArray(a) && a.length > 0)
-                            for (let t in a)
-                                if ("function" != typeof a[t]) {
-                                    console.log(t, 192121)
-                                    if (a[t].urlButton) {
-                                        if ((r++, !a[t].urlButton)) return WAPI.scope(e, !0, 404, "passed object urlButton");
-                                        if ("object" != typeof a[t].urlButton) return WAPI.scope(e, !0, 404, "passed object value in urlButton");
-                                        if (!a[t].urlButton.displayText) return WAPI.scope(e, !0, 404, "passed object displayText");
-                                        if ("string" != typeof a[t].urlButton.displayText) return WAPI.scope(e, !0, 404, "passed string value in displayText");
-                                        if (!a[t].urlButton.url) return WAPI.scope(e, !0, 404, "passed object url");
-                                        if ("string" != typeof a[t].urlButton.url) return WAPI.scope(e, !0, 404, "passed string value in url");
-                                    }
-                                    if (a[t].callButton) {
-                                        if ((r++, !a[t].callButton)) return WAPI.scope(e, !0, 404, "passed object callButton");
-                                        if ("object" != typeof a[t].callButton) return WAPI.scope(e, !0, 404, "passed object value in callButton");
-                                        if (!a[t].callButton.displayText) return WAPI.scope(e, !0, 404, "passed object displayText");
-                                        if ("string" != typeof a[t].callButton.displayText) return WAPI.scope(e, !0, 404, "passed string value in displayText");
-                                        if (!a[t].callButton.phoneNumber) return WAPI.scope(e, !0, 404, "passed object phoneNumber");
-                                        if ("string" != typeof a[t].callButton.phoneNumber) return WAPI.scope(e, !0, 404, "passed string value in phoneNumber");
-                                    }
-                                    if (a[t].quickReplyButton) {
-                                        if ((r++, !a[t].quickReplyButton)) return WAPI.scope(e, !0, 404, "passed object quickReplyButton");
-                                        if ("object" != typeof a[t].quickReplyButton) return WAPI.scope(e, !0, 404, "passed object value in quickReplyButton");
-                                        if (!a[t].quickReplyButton.displayText) return WAPI.scope(e, !0, 404, "passed object displayText");
-                                        if ("string" != typeof a[t].quickReplyButton.displayText) return WAPI.scope(e, !0, 404, "passed string value in displayText");
-                                        a[t].quickReplyButton.id || (a[t].quickReplyButton.id = `id${t}`);
-                                    }
-                                }
-                        if (0 === r) return WAPI.scope(e, !0, 404, "button type not specified!");
-                        if (o && 404 != o.status && o.id) {
-                            const e = await window.WAPI.getNewMessageId(o.id._serialized),
-                                r = await Store.MaybeMeUser.getMaybeMeUser(),
-                                d = new Store.TemplateButtonCollection(),
-                                c = {
-                                    from: r,
-                                    id: e,
-                                    ack: 0,
-                                    to: o.id,
-                                    local: !0,
-                                    self: "out",
-                                    isNewMsg: !0,
-                                    t: parseInt(new Date().getTime() / 1e3),
-                                    type: "chat",
-                                    isQuotedMsgAvailable: !0,
-                                    isFromTemplate: !0,
-                                    footer: i,
-                                    body: t,
-                                    buttons: d,
-                                    __x_title: n,
-                                    hydratedButtons: a,
-                                };
-                            c.buttons.add(
-                                c.hydratedButtons.map((e, t) => {
-                                    const n = `${null != e.index ? e.index : t}`;
-                                    return e.quickReplyButton
-                                        ? new Store.templateButton({ id: n, displayText: e.quickReplyButton.displayText, selectionId: e.quickReplyButton.id, subtype: "quick_reply" })
-                                        : e.urlButton
-                                            ? new Store.templateButton({ id: n, displayText: e.urlButton.displayText, url: e.urlButton?.url, subtype: "url" })
-                                            : e.callButton
-                                                ? new Store.templateButton({ id: n, displayText: e.callButton.displayText, phoneNumber: e.callButton.phoneNumber, subtype: "call" })
-                                                : void 0;
-                                })
-                            );
-                            var s = (await Promise.all(window.Store.addAndSendMsgToChat(o, c)))[1];
-                            return "success" === s || "OK" === s || "OK" === s.messageSendResult ? WAPI.scope(e, !1, s, null) : WAPI.scope(e, !0, s, null);
-                        }
-                        return o;
                     }),
                     (window.WAPI.sendPollCreation = async function (e, t) {
                         if ("object" != typeof t) return WAPI.scope(e, !0, 404, "poll must be an object");

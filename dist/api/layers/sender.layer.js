@@ -43,29 +43,7 @@ class SenderLayer extends AutomateLayer_1.AutomateLayer {
             return WAPI.createCommunity(name, description);
         }, { name, description });
     }
-    /**
-     * Send List menu
-     * @param to the numberid xxx@c.us
-     * @param title the titulo
-     * @param subtitle the subtitle
-     * @param description the description
-     * @param buttonText the name button
-     * @param menu List menu
-     */
-    async sendListMenu(to, title, subTitle, description, buttonText, menu) {
-        return new Promise(async (resolve, reject) => {
-            const result = await this.page.evaluate(({ to, title, subTitle, description, buttonText, menu }) => {
-                return WAPI.sendListMenu(to, title, subTitle, description, buttonText, menu);
-            }, { to, title, subTitle, description, buttonText, menu });
-            if (result['erro'] == true) {
-                return reject(result);
-            }
-            else {
-                return resolve(result);
-            }
-        });
-    }
-    //*PRO_
+    
     /**
      * Send status text
      * @param text The text for the status
@@ -222,77 +200,7 @@ class SenderLayer extends AutomateLayer_1.AutomateLayer {
             }
         });
     }
-    /**
-     * Sends a text message to given chat
-     * @param to chat id: xxxxx@us.c
-     * @param title
-     * @param subtitle
-     * @param buttons
-     */
-    async sendButtons(to, title, subtitle, buttons) {
-        return new Promise(async (resolve, reject) => {
-            const typeFunction = 'sendButtons';
-            const type = 'string';
-            const obj = 'object';
-            const check = [
-                {
-                    param: 'to',
-                    type: type,
-                    value: to,
-                    function: typeFunction,
-                    isUser: true
-                },
-                {
-                    param: 'title',
-                    type: type,
-                    value: title,
-                    function: typeFunction,
-                    isUser: true
-                },
-                {
-                    param: 'subtitle',
-                    type: type,
-                    value: subtitle,
-                    function: typeFunction,
-                    isUser: true
-                },
-                {
-                    param: 'buttons',
-                    type: obj,
-                    value: buttons,
-                    function: typeFunction,
-                    isUser: true
-                }
-            ];
-            const validating = (0, layers_interface_1.checkValuesSender)(check);
-            if (typeof validating === 'object') {
-                return reject(validating);
-            }
-            const result = await this.page.evaluate(({ to, title, subtitle, buttons }) => {
-                return WAPI.sendButtons(to, title, subtitle, buttons);
-            }, { to, title, subtitle, buttons });
-            if (result['erro'] == true) {
-                console.log(result)
-                return reject(result);
-            }
-            else {
-                return resolve(result);
-            }
-        });
-    }
-    async sendTypeButtons(to, title, subtitle, footer, buttons) {
-        return new Promise(async (resolve, reject) => {
-            const result = await this.page.evaluate(({ to, title, subtitle, footer, buttons }) => {
-                return WAPI.sendTypeButtons(to, title, subtitle, footer, buttons);
-            }, { to, title, subtitle, footer, buttons });
-            if (result['erro'] == true) {
-                return reject(result);
-            }
-            else {
-                return resolve(result);
-            }
-        });
-    }
+
     /**
      * Sends a text message to given chat
      * @param to chat id: xxxxx@us.c

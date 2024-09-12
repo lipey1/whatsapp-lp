@@ -9,16 +9,6 @@ export declare class SenderLayer extends AutomateLayer {
     constructor(browser: Browser, page: Page, session?: string, options?: CreateConfig);
     createCommunity(name: string, description: string): Promise<void>;
     /**
-     * Send List menu
-     * @param to the numberid xxx@c.us
-     * @param title the titulo
-     * @param subtitle the subtitle
-     * @param description the description
-     * @param buttonText the name button
-     * @param menu List menu
-     */
-    sendListMenu(to: string, title: string, subTitle: string, description: string, buttonText: string, menu: Array<any>): Promise<Object>;
-    /**
      * Send status text
      * @param text The text for the status
      */
@@ -39,15 +29,6 @@ export declare class SenderLayer extends AutomateLayer {
      * @param caption
      */
     sendVideoStatus(filePath: string, description?: string): Promise<unknown>;
-    /**
-     * Sends a text message to given chat
-     * @param to chat id: xxxxx@us.c
-     * @param title
-     * @param subtitle
-     * @param buttons
-     */
-    sendButtons(to: string, title: string, subtitle: string, buttons: any): Promise<Object>;
-    sendTypeButtons(to: string, title: string, subtitle: string, footer: string, buttons: any): Promise<Object>;
     /**
      * Sends a text message to given chat
      * @param to chat id: xxxxx@us.c
