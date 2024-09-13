@@ -1,6 +1,13 @@
 const path = require('path');
 const fs = require('fs');
 
+/**
+ * Processa mensagens com o cliente do WhatsApp.
+ *
+ * @param {import('whatsapp-lp').Whatsapp} client - O cliente do WhatsApp.
+ * @param {import('whatsapp-lp').Message} message - O cliente do WhatsApp.
+ */
+
 module.exports = function (client) {
     return {
         init: function () {
@@ -30,7 +37,11 @@ module.exports = function (client) {
                 const newSegments = segments.slice(commandsIndex + 1);
                 const commandModule = require(`./${path.join(...newSegments)}`)
 
-                if (commandModule.type && typeof commandModule.execute === 'function') {
+                if (!commandModule.type) {
+                    return null;
+                }
+
+                if (typeof commandModule.execute === 'function') {
                     console.log(" ○".green + ` ${path.basename(filePath, path.extname(filePath))} event was started`.white);
 
                     return {
@@ -41,13 +52,13 @@ module.exports = function (client) {
                 } else {
                     console.log(` ○`.red + ` Evento inválido encontrado em:`.white + ` ${filePath}`.gray)
                 }
-            });
+            }).filter(Boolean)
 
             client.onMessage(async (message) => {
-                    const event = arrayEvents.find(eve => eve.type === message.type);
-                    if (event) {
-                        await event.execute(client, message);
-                    }
+                const event = arrayEvents.find(eve => eve.type === message.type);
+                if (event) {
+                    await event.execute(client, message);
+                }
             });
         },
     };

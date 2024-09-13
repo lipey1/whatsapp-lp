@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "whatsapp-by-lipey",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "whatsapp-lp": "^5.5.0"
+    "whatsapp-lp": "^5.5.1"
   }
 }

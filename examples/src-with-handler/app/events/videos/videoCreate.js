@@ -9,7 +9,7 @@ const mime = require('mime-types');
  * @param {import('whatsapp-lp').Message} message - O cliente do WhatsApp.
  */
 
-async function handleImages(client, message) {
+async function handleVideos(client, message) {
     const buffer = await client.decryptFile(message);
     const existsDir = fs.existsSync(path.join(__dirname, './files'));
     if (!existsDir) {
@@ -18,10 +18,10 @@ async function handleImages(client, message) {
     const pathFile = path.join(__dirname, './files', `${message.id}.${mime.extension(message.mimetype)}`);
     fs.writeFileSync(pathFile, buffer)
 
-    await client.reply(message.from, 'Image saved successfuly! 🖼️', message.id)
+    await client.reply(message.from, 'Video saved successfuly! 🎥', message.id)
 }
 
 module.exports = {
-    type: "image",
-    execute: handleImages,
+    type: "video",
+    execute: handleVideos,
 }

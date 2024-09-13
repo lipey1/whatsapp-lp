@@ -5,12 +5,12 @@
  * @param {import('whatsapp-lp').Message} message - O cliente do WhatsApp.
  */
 
-async function handleSticker(client, message) {
-
-    await client.reply(message.from, 'Nice sticker! 😄', message.id)
+async function groupAdd(client, message) {
+    await client.sendText(message.from, "Oops! I can't stay in this group! 😢")
+    await client.leaveGroup(message.groupInfo.id);
 }
 
 module.exports = {
-    type: "sticker",
-    execute: handleSticker,
+    subtype: 'add',
+    execute: groupAdd,
 }

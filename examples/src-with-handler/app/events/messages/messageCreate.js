@@ -1,6 +1,13 @@
 const path = require('path');
 const fs = require('fs');
 
+/**
+ * Processa mensagens com o cliente do WhatsApp.
+ *
+ * @param {import('whatsapp-lp').Whatsapp} client - O cliente do WhatsApp.
+ * @param {import('whatsapp-lp').Message} message - O cliente do WhatsApp.
+ */
+
 async function handleMessages(client, message) {
     function getAllJSFiles(dirPath, arrayOfFiles) {
         const files = fs.readdirSync(dirPath);
