@@ -10,15 +10,24 @@ const mime = require('mime-types');
  */
 
 async function handleAudio(client, message) {
-    const buffer = await client.decryptFile(message);
-    const existsDir = fs.existsSync(path.join(__dirname, './files'));
-    if (!existsDir) {
-        fs.mkdirSync(path.join(__dirname, './files'));
-    }
-    const pathFile = path.join(__dirname, './files', `${message.id}.${mime.extension(message.mimetype)}`);
-    fs.writeFileSync(pathFile, buffer)
+    switch (message.isViewOnce) {
+        case true:
+            await client.reply(message.from, 'Unable to save single view images 🥺', message.id)
+            break;
+        case false:
+            const buffer = await client.decryptFile(message);
+            const existsDir = fs.existsSync(path.join(__dirname, './files'));
+            if (!existsDir) {
+                fs.mkdirSync(path.join(__dirname, './files'));
+            }
+            const pathFile = path.join(__dirname, './files', `${message.id}.${mime.extension(message.mimetype)}`);
+            fs.writeFileSync(pathFile, buffer)
 
-    await client.reply(message.from, 'Audio saved successfuly! 🎙️', message.id)
+            await client.reply(message.from, 'Audio saved successfuly! 🎙️', message.id)
+            break;
+        default:
+            break;
+    }
 }
 
 module.exports = {

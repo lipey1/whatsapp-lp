@@ -10,7 +10,7 @@ const fs = require('fs');
 
 module.exports = function (client) {
     return {
-        init: function () {
+        init: async function () {
             function getAllJSFiles(dirPath, arrayOfFiles) {
                 const files = fs.readdirSync(dirPath);
                 arrayOfFiles = arrayOfFiles || [];
@@ -54,7 +54,7 @@ module.exports = function (client) {
                 }
             }).filter(Boolean)
 
-            client.onMessage(async (message) => {
+            await client.onMessage(async (message) => {
                 const event = arrayEvents.find(eve => eve.type === message.type);
                 if (event) {
                     await event.execute(client, message);

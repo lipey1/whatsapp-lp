@@ -54,3 +54,5 @@ async function start(client) {
 ```
 
 Using the WhatsApp-LP methods, it is possible to create a handler for text commands, images, audios, stickers, among others, these codes will be available on our GitHub.
+
+Our website: https://felipeestrela.com.br/docs/whatsapp-lp

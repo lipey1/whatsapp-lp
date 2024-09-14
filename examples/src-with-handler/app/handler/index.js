@@ -8,7 +8,7 @@ require('colors');
 
 async function handler(client) {
     const eventHandler = require('../events/events')(client)
-    eventHandler.init()
+    await eventHandler.init()
 }
 
 module.exports = { handler }
