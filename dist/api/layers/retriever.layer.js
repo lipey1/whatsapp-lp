@@ -183,7 +183,6 @@ class RetrieverLayer extends sender_layer_1.SenderLayer {
      * @deprecated
      */
     async getChat(contactId) {
-        console.log(contactId);
         return await this.getChatById(contactId);
     }
     /**
